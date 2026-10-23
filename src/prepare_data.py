@@ -14,9 +14,17 @@ TEXT_COLS = ["FILENAME", "URL", "Domain", "TLD", "Title"]
 
 def prepare(raw_path: Path = RAW, out_path: Path = OUT) -> pd.DataFrame:
     df = pd.read_csv(raw_path)
-    df = df.drop_duplicates().dropna()
+    n_raw = len(df)
+
+    df = df.drop_duplicates(subset="URL")
+    n_dup = n_raw - len(df)
+
     df = df.drop(columns=[c for c in TEXT_COLS if c in df.columns])
-    df["label"] = df["label"].astype(int)
+    n_missing = int(df.isna().sum().sum())
+    df = df.dropna()
+
+
+    df["label"] = 1- df["label"].astype(int)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_parquet(out_path, index=False)
     return df
