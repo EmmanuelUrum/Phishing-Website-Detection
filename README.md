@@ -6,6 +6,10 @@ Classifying URLs as phishing or legitimate using the PhiUSIIL Phishing URL datas
 - Juno: data preparation, EDA, preprocessing
 - Emmanuel: train/test split, baseline and final models, evaluation
 
+## Data source
+PhiUSIIL Phishing URL Dataset, UCI Machine Learning Repository:
+https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset
+
 ## Setup after cloning
 
 Run all commands from the repo root. You need Python 3.10 or newer.
@@ -71,10 +75,11 @@ Add each model's metrics to `reports/model_comparison.csv`.
 ## Troubleshooting
 - `ModuleNotFoundError: No module named 'src'`: run from the repo root and use `python -m src.prepare_data`, not `python src/prepare_data.py`.
 - `Missing .../PhiUSIIL_Phishing_URL_Dataset.csv`: the CSV is not in `data/raw/` or has a different name.
+- Fewer than 235,795 rows loaded, or the label column shows `1.0`/`0.0`: the CSV is incomplete. Download it again.
 - `nbstripout: command not found`: activate the virtual environment first (step 2).
 
 ## Project layout
-- `data/raw/` raw CSV (not committed)
+- `data/raw/` raw PhiUSIIL CSV
 - `data/processed/` cleaned dataset (`clean.parquet`)
 - `notebooks/` 01 EDA, 02 preprocessing, 03 baseline, 04 models
 - `src/` shared code: `prepare_data.py`, `split.py`, `evaluate.py`
